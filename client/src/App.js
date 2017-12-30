@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import Landing from './components/Landing';
+import Signup from './components/Signup';
+import Signin from './components/Signin';
 
 window.axios = axios;
 
@@ -72,13 +74,25 @@ class App extends Component {
 
         <h1>Count: { this.state.count }</h1>
 
-        <Route path="/" exact component={Landing} />
-        <Route path="/dashboard" render={() => (
-          <Dashboard gifs={this.state.gifs} />
-        )} />
+        <Route path="/" exact component={Signup} />
+        <Route path="/signin" exact component={Signin} />
+        <PrivateRoute path="/dashboard" component = {Dashboard} />
       </div>
     );
   }
 }
+const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
+
+const PrivateRoute = ({component:Component, ...rest}) => {
+    return(
+        <Route
+            exact
+            {...rest}
+            render = {(props) => isAuthenticated
+            ? <Component />
+            :  <Redirect to = {{ pathname: "/"}}/>   }
+            />
+    );
+};
 
 export default App;
