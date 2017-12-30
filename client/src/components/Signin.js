@@ -15,7 +15,6 @@ class Signin extends Component {
         this.setState({[event.target.name]: event.target.value});
     };
 
-
     sendData = (event) => {
         event.preventDefault();
 

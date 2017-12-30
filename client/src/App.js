@@ -33,9 +33,16 @@ class App extends Component {
       logo: 'React Something Else',
       sub_text: 'An Awesome Experience!',
       count: 0,
-      gifs: []
+      gifs: [],
+      authenticated: false
     }
   }
+
+  componentDidMount() {
+    // this.getGifs();
+    
+  }
+
 
   increaseCounter = () => {
     this.setState({
@@ -48,7 +55,7 @@ class App extends Component {
 
     axios.get(`http://api.giphy.com/v1/gifs/search?api_key=${key}&q=batman&limit=10`)
       .then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         this.setState({
           gifs: res.data.data
         });
@@ -57,9 +64,6 @@ class App extends Component {
       });
   }
 
-  componentDidMount() {
-    this.getGifs();
-  }
 
   render() {
     // let div = document.createElement('div');
@@ -76,23 +80,21 @@ class App extends Component {
 
         <Route path="/" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />
-        <PrivateRoute path="/dashboard" component = {Dashboard} />
+        <Route path="/dashboard" component={Dashboard} />
+        {/*<PrivateRoute component={Dashboard} />*/}
       </div>
     );
   }
 }
-const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
 
-const PrivateRoute = ({component:Component, ...rest}) => {
-    return(
-        <Route
-            exact
-            {...rest}
-            render = {(props) => isAuthenticated
-            ? <Component />
-            :  <Redirect to = {{ pathname: "/"}}/>   }
-            />
-    );
-};
+
+
+// const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
+
+// const PrivateRoute = props => {
+//   if ( isAuthenticated )
+//     return ();
+//   return (<Redirect to = {{ pathname: "/"}}/>); 
+// };
 
 export default App;

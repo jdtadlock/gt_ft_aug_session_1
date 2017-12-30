@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import helpers from '../helpers/helpers';
 
 const Header = props => (
 	<header className="row split y-center">
@@ -10,7 +11,7 @@ const Header = props => (
 		<nav>
 			<button onClick={props.increase}>Increase</button>
 			<Link to="/">Home</Link>
-			<Link to="/dashboard">Dashboard</Link>
+			{helpers.isAuthenticated() ? <Link to="/dashboard">Dashboard</Link> : ''}
 		</nav>
 	</header>
 )
