@@ -81,20 +81,10 @@ class App extends Component {
         <Route path="/" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/dashboard" component={Dashboard} />
-        {/*<PrivateRoute component={Dashboard} />*/}
       </div>
     );
   }
 }
 
-
-
-// const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
-
-// const PrivateRoute = props => {
-//   if ( isAuthenticated )
-//     return ();
-//   return (<Redirect to = {{ pathname: "/"}}/>); 
-// };
 
 export default App;
