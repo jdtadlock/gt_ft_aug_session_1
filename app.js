@@ -69,18 +69,6 @@ const generateToken = (_id, username) => {
 
 
 
-const verifyCookie = (req, res, next) => {
-    const {token} = req.cookies;
-    jwt.verify(token, 'awesome', (err, decoded) => {
-        if(err){
-            res.status(401).json({error:"No Access buddy"});
-        } else{
-            next();
-        }
-    });
-
-};
-
 
 
 app.post("/signup", (req, res) => {
@@ -92,6 +80,7 @@ app.post("/signup", (req, res) => {
         .then((user) => {
             if(user)
                 return res.status(409).json({error: "User already exist"});
+
             const create_user = new User({
                 username,
                 password: hash
@@ -130,6 +119,19 @@ app.post("/signin", (req, res) => {
         });
 
 });
+
+
+const verifyCookie = (req, res, next) => {
+    const {token} = req.cookies;
+    jwt.verify(token, 'awesome', (err, decoded) => {
+        if(err){
+            res.status(401).json({error:"No Access buddy"});
+        } else{
+            next();
+        }
+    });
+
+};
 
 
 

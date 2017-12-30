@@ -76,21 +76,23 @@ class App extends Component {
 
         <Route path="/" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />
-        <PrivateRoute path="/dashboard" component = {Dashboard} />
+        <PrivateRoute path="/dashboard" render={() => (
+          <Dashboard gifs={this.state.gifs} />
+        )} />
       </div>
     );
   }
 }
 const isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
 
-const PrivateRoute = ({component:Component, ...rest}) => {
+const PrivateRoute = ({render:Render,  ...rest}) => {
     return(
         <Route
             exact
             {...rest}
             render = {(props) => isAuthenticated
-            ? <Component />
-            :  <Redirect to = {{ pathname: "/"}}/>   }
+            ? <Render/>
+            :  <Redirect to = {{ pathname: "/"}}/> }
             />
     );
 };
